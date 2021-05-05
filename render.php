@@ -64,6 +64,17 @@
       }
     }
 
+    if ($featuredImage[$i]) {
+      $localImage = str_replace('/wp-content/uploads/', '', parse_url($featuredImage[$i], PHP_URL_PATH));
+      $imagePath = 'images/' . pathinfo($localImage,  PATHINFO_DIRNAME);
+
+      if (!is_dir($imagePath)) {
+        mkdir($imagePath, 0744, true);
+      }
+
+      copy($featuredImage[$i], '/images/' . $localImage);
+    }
+
     if ($config['yearHeadings'] && $currentYear != $year[$i]) {
       $currentYear = $year[$i];
 
@@ -73,6 +84,8 @@
       $indexContents .= '<h2>' . $currentYear . '</h2><ul>';
     }
 
+
+
     $indexContents .= "<li><a href=\"" . $path . $slugs[$i] . ".html\">" . $titles[$i] . "</a></li>";
 
     $fh = fopen($path . $slugs[$i].".html", 'w+') or die ("Can't open file.");
@@ -81,7 +94,7 @@
     fwrite($fh, "<h1>" . $titles[$i] . "</h1>\n\n");
 
     if ($featuredImage[$i]) {
-      fwrite($fh, "<img src=\"" . $featuredImage[$i] . "\"/>" );
+      fwrite($fh, "<img src=\"" . 'images/' . $localImage . "\"/>" );
     }
 
     fwrite($fh, $posts[$i]);

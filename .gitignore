@@ -1,5 +1,11 @@
 # Exclude rendered files
 *.html
 
+# Exclude image files
+*.jpg
+*.jpeg
+*.gif
+*.png
+
 # Do not commit modified config.php
 config.php
