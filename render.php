@@ -4,7 +4,9 @@
   // ini_set('display_startup_errors', 1);
   // error_reporting(E_ALL);
 
-  $httpHeaders = get_headers('http://EXAMPLE.COM/wp-json/wp/v2/posts?per_page=1', 1);
+  $config = include('config.php');
+
+  $httpHeaders = get_headers($config['site'] . '/wp-json/wp/v2/posts?per_page=1', 1);
   $totalPosts = $httpHeaders['X-WP-Total'];
   $totalPages = intval($totalPosts / 100);
   if ($totalPages == 0) {
@@ -18,7 +20,7 @@
   $posts = [];
 
   for ($i = 1; $i <= $totalPages; $i++ ) {
-    $json = file_get_contents('http://EXAMPLE.COM/wp-json/wp/v2/posts?filter[orderby]=date&order=desc&per_page=100&page=' . $i);
+    $json = file_get_contents($config['site'] . '/wp-json/wp/v2/posts?filter[orderby]=date&order=desc&per_page=100&page=' . $i);
     $obj = json_decode($json);
 
     foreach ($obj as $value) {
@@ -38,7 +40,7 @@
   $indexContents .= "</ul>";
 
   $fh = fopen("index.html", 'w+') or die ("Can't open file.");
-  $modifiedHeader = str_replace("[TITLE]", "Home", $header);
+  $modifiedHeader = str_replace("[TITLE]", $config['siteName'], $header);
   fwrite($fh, $modifiedHeader);
   fwrite($fh, "<h1>Posts</h1>\n\n");
   fwrite($fh, $indexContents);
@@ -62,5 +64,5 @@
 ?>
 <h1>WordPress to static via REST API</h1>
 <?php echo $indexContents ?>
-<p><a href="index.html"> View the index</a></p>
+<p><a href="index.html">View the index</a></p>
 <?php echo $footer ?>

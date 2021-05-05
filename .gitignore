@@ -1,0 +1,5 @@
+# Exclude rendered files
+*.html
+
+# Do not commit modified config.php
+config.php
