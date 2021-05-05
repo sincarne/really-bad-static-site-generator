@@ -24,6 +24,7 @@ To Do
 -----
 * ~~create a config~~
 * import images
-* duplicate the source WordPress site's path structure
+* ~~duplicate the source WordPress site's path structure~~ (I have added the ability to put posts in subdirectories by `year` or `year/month`)
 * find a way to eliminate that original API call to get the `X-WP-Total` value. Maybe do one call for the first 100 posts, _then_ loop if needed?
 * have WordPress call `render.php` automatically on publishing?
+* create an RSS feed
