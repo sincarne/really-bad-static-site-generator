@@ -16,6 +16,10 @@
       max-width: 800px;
       margin: auto;
     }
+
+    img {
+      width:100%;
+    }
   </style>
 </head>
 <body>

@@ -1,8 +1,8 @@
 <?php
 
-  // ini_set('display_errors', 1);
-  // ini_set('display_startup_errors', 1);
-  // error_reporting(E_ALL);
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
 
   $config = include('config.php');
 
@@ -18,17 +18,24 @@
   $slugs = [];
   $titles = [];
   $posts = [];
+  $featuredImage = [];
   $year = [];
   $month = [];
 
   for ($i = 1; $i <= $totalPages; $i++ ) {
-    $json = file_get_contents($config['site'] . '/wp-json/wp/v2/posts?filter[orderby]=date&order=desc&per_page=100&page=' . $i);
+    $json = file_get_contents($config['site'] . '/wp-json/wp/v2/posts?filter[orderby]=date&order=desc&_embed&per_page=100&page=' . $i);
     $obj = json_decode($json);
 
     foreach ($obj as $value) {
       $slugs[] = $value->slug;
       $titles[] = $value->title->rendered;
       $posts[] = $value->content->rendered;
+      if (isset($value->_embedded->{'wp:featuredmedia'}[0]->source_url)) {
+        $featuredImage[] = $value->_embedded->{'wp:featuredmedia'}[0]->source_url;
+      } else {
+        $featuredImage[] = false;
+      }
+      
 
       $timestamp = strtotime($value->date);
       $year[] = date('Y', $timestamp);
@@ -72,6 +79,11 @@
     $modifiedHeader = str_replace("[TITLE]", $titles[$i], $header);
     fwrite($fh, $modifiedHeader);
     fwrite($fh, "<h1>" . $titles[$i] . "</h1>\n\n");
+
+    if ($featuredImage[$i]) {
+      fwrite($fh, "<img src=\"" . $featuredImage[$i] . "\"/>" );
+    }
+
     fwrite($fh, $posts[$i]);
     fwrite($fh, "<a href=\"/index.html\">Back</a>");
     fwrite($fh, $footer);
