@@ -1,8 +1,8 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+  // ini_set('display_errors', 1);
+  // ini_set('display_startup_errors', 1);
+  // error_reporting(E_ALL);
 
   $httpHeaders = get_headers('http://EXAMPLE.COM/wp-json/wp/v2/posts?per_page=1', 1);
   $totalPosts = $httpHeaders['X-WP-Total'];
@@ -13,9 +13,9 @@ error_reporting(E_ALL);
     $totalPages++;
   }
 
-  $slugs = array();
-  $titles = array();
-  $posts = array();
+  $slugs = [];
+  $titles = [];
+  $posts = [];
 
   for ($i = 1; $i <= $totalPages; $i++ ) {
     $json = file_get_contents('http://EXAMPLE.COM/wp-json/wp/v2/posts?filter[orderby]=date&order=desc&per_page=100&page=' . $i);
