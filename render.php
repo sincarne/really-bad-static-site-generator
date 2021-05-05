@@ -38,7 +38,8 @@
 
   $header = file_get_contents('_header.php');
   $footer = file_get_contents('_footer.php');
-  $indexContents = "<ul>";
+  $indexContents = '';
+  $currentYear = '';
   
   for ($i = 0; $i < $totalPosts; $i++ ) {
     $path = '';
@@ -54,6 +55,15 @@
       if (!is_dir($path)) {
         mkdir($path, 0700);
       }
+    }
+
+    if ($config['yearHeadings'] && $currentYear != $year[$i]) {
+      $currentYear = $year[$i];
+
+      if ($indexContents != '') {
+        $indexContents .= '</ul>';
+      }
+      $indexContents .= '<h2>' . $currentYear . '</h2><ul>';
     }
 
     $indexContents .= "<li><a href=\"" . $path . $slugs[$i] . ".html\">" . $titles[$i] . "</a></li>";

@@ -10,6 +10,9 @@
     // 0: all html in the mail directory
     // 1: separate by year
     // 2: seperate by year/month
-    'folderStructure' => 0
+    'folderStructure' => 0,
+
+    // set yearHeadings to true to add <h2>year of post</h2>
+    'yearHeadings' => false
   ]
 ?>
