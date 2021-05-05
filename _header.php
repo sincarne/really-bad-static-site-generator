@@ -7,18 +7,18 @@
   <title>[TITLE]</title>
   <style>
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-      Roboto, Oxygen-Sans, Ubuntu, Cantarell,
-      "Helvetica Neue", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     }
 
     .wrapper {
-      max-width: 800px;
       margin: auto;
+      max-width: 800px;
     }
 
     img {
-      width:100%;
+      display: block;
+      margin: auto;
+      max-width: 100%;
     }
   </style>
 </head>
